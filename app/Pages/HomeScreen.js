@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import ChatFaceData from '../Services/ChatFaceData';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
     const [chatFaceData, setChatFaceData] = useState([]);
     const [selectedChatFaceData, setSelectedChatFaceData] = useState([]);
+    const navigation = useNavigation();
     
     useEffect(() => {
         setChatFaceData(ChatFaceData);
@@ -36,7 +38,7 @@ export default function HomeScreen() {
         <Text style={{marginTop:5, fontSize:17, color:"#B0B0B0"}}>Choose Your Favourite ChatBuddy</Text>
       </View>
 
-      <TouchableOpacity style={[{backgroundColor:selectedChatFaceData.primary}, {padding:17, width:Dimensions.get('screen').width*0.6, borderRadius:100, alignItems:'center', marginTop:30}]}>
+      <TouchableOpacity onPress={() => navigation.navigate('chat')} style={[{backgroundColor:selectedChatFaceData.primary}, {padding:17, width:Dimensions.get('screen').width*0.6, borderRadius:100, alignItems:'center', marginTop:30}]}>
         <Text style={{fontSize:16, color:'#fff'}}>Get Started</Text>
       </TouchableOpacity>
     </View>
