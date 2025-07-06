@@ -8,23 +8,47 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Image,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import GlobalApi from '../Services/GlobalApi';
+
+const TypingIndicator = () => {
+  const [dotCount, setDotCount] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDotCount((prev) => (prev % 3) + 1);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10 }}>
+      <Text style={{ fontSize: 36, color: '#888', fontWeight: 'bold' }}>{'.'.repeat(dotCount)}</Text>
+    </View>
+  );
+};
 
 export default function ChatScreen() {
   const { params } = useRoute(); 
-  const [selectedChatFace, setSelectedChatFace] = useState([]);
-
-  // setSelectedChatFace(params.selectedFace);
-  const [messages, setMessages] = useState([
-    {
-      id: '1',
-      text: 'Hello ',
-      sender: 'bot',
-    },
-  ]);
-
+  const [selectedChatFace, setSelectedChatFace] = useState('');
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (params && params.selectedFace) {
+      setSelectedChatFace(params.selectedFace);
+      setMessages([
+        {
+          id: Date.now().toString(),
+          text: `Hello ${params.selectedFace.name}`,
+          sender: 'bot',
+        },
+      ]);
+    }
+  }, [params]);
 
   const sendMessage = () => {
     if (!inputText.trim()) return;
@@ -36,7 +60,27 @@ export default function ChatScreen() {
     };
 
     setMessages((prevMessages) => [newMessage, ...prevMessages]);
+    setLoading(true);
+    getApiResp(inputText);
     setInputText('');
+  };
+
+  const getApiResp = (msg) => {
+    GlobalApi.getBardApi(msg).then(resp => {
+      console.log(resp);
+
+      // Use the correct property from your API response
+      const botReply = resp.data.reply || "Sorry, I didn't understand that.";
+
+      const botMessage = {
+        id: Date.now().toString(),
+        text: botReply,
+        sender: 'bot',
+      };
+
+      setMessages((prevMessages) => [botMessage, ...prevMessages]);
+      setLoading(false);
+    });
   };
 
   // Create combined data with date header at the end
@@ -63,11 +107,28 @@ export default function ChatScreen() {
       );
     }
 
+    if (item.sender === 'bot') {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+          <Image
+            source={{ uri: selectedChatFace.image }}
+            style={styles.botImage}
+          />
+          <View style={[styles.message, styles.botMsg]}>
+            <Text style={styles.text}>{item.text}</Text>
+            <Text style={styles.time}>
+              {new Date(parseInt(item.id)).toLocaleTimeString()}
+            </Text>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <View
         style={[
           styles.message,
-          item.sender === 'user' ? styles.userMsg : styles.botMsg,
+          styles.userMsg,
         ]}
       >
         <Text style={styles.text}>{item.text}</Text>
@@ -94,6 +155,8 @@ export default function ChatScreen() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         />
+        {/* Show animated typing indicator at the bottom if loading */}
+        {loading && <TypingIndicator />}
       </KeyboardAvoidingView>
 
       <View style={styles.inputContainer}>
@@ -189,5 +252,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'center',
     borderRadius: 20,
+  },
+  botImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginRight: 8,
+    backgroundColor: '#eee',
   },
 });
