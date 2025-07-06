@@ -67,7 +67,7 @@ export default function ChatScreen() {
 
   const getApiResp = (msg) => {
     GlobalApi.getBardApi(msg).then(resp => {
-      console.log(resp);
+      // console.log(resp);
 
       // Use the correct property from your API response
       const botReply = resp.data.reply || "Sorry, I didn't understand that.";
@@ -181,14 +181,20 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: Platform.OS === 'android' ? 30 : 0, // lift input bar on Android
-    backgroundColor: '#fff',
+    paddingBottom: Platform.OS === 'android' ? 30 : 0,
+    backgroundColor: '#f5f7fa',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    overflow: 'hidden',
   },
   flex1: {
     flex: 1,
+    paddingHorizontal: 8,
+    paddingTop: 8,
   },
   messagesList: {
     flex: 1,
+    paddingHorizontal: 4,
   },
   dateHeader: {
     alignItems: 'center',
@@ -206,20 +212,29 @@ const styles = StyleSheet.create({
   },
   message: {
     margin: 8,
-    padding: 10,
-    borderRadius: 10,
+    padding: 12,
+    borderRadius: 16,
     maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
   },
   userMsg: {
-    backgroundColor: '#DCF8C6',
+    backgroundColor: '#4f8cff',
     alignSelf: 'flex-end',
+    color: '#fff',
   },
   botMsg: {
-    backgroundColor: '#EEE',
+    backgroundColor: '#fff',
     alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
   },
   text: {
     fontSize: 16,
+    color: '#222',
   },
   time: {
     fontSize: 10,
@@ -232,9 +247,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    marginBottom: Platform.OS === 'android' ? 20 : 0, // lift input bar margin for Android
+    marginBottom: Platform.OS === 'android' ? 20 : 0,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   input: {
     flex: 1,
@@ -245,13 +267,19 @@ const styles = StyleSheet.create({
     height: 40,
     marginRight: 10,
     backgroundColor: '#fff',
+    fontSize: 16,
   },
   sendBtn: {
-    backgroundColor: '#007AFF',
-    padding:5,
-    paddingHorizontal: 15,
+    backgroundColor: '#4f8cff',
+    padding: 8,
+    paddingHorizontal: 18,
     justifyContent: 'center',
     borderRadius: 20,
+    shadowColor: '#4f8cff',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 2,
   },
   botImage: {
     width: 36,
@@ -259,5 +287,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     marginRight: 8,
     backgroundColor: '#eee',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
   },
 });
