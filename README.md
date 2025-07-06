@@ -1,54 +1,45 @@
-<<<<<<< HEAD
-# Welcome to your Expo app 👋
+# AI Chatbot
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, mobile-friendly AI-powered chatbot app built with Expo and React Native.
 
-## Get started
+## Features
+- Chat with an AI assistant in real time
+- Animated typing indicator for bot replies
+- Modern, visually appealing chat UI
+- Customizable chat faces/avatars
 
-1. Install dependencies
+## Getting Started
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### 1. Install dependencies
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Start the app
+```bash
+npx expo start
+```
 
-## Learn more
+You can then open the app in:
+- A development build
+- Android emulator
+- iOS simulator
+- Expo Go app
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Project Structure
+- `app/Pages/ChatScreen.js` — Main chat interface
+- `app/Pages/HomeScreen.js` — Home screen
+- `app/Services/GlobalApi.js` — API integration
+- `app/Navigation/` — Navigation logic
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Customization
+- Edit `ChatScreen.js` for chat UI and logic
+- Update `GlobalApi.js` to change backend or AI provider
 
-## Join the community
+## Learn More
+- [Expo documentation](https://docs.expo.dev/)
+- [React Native documentation](https://reactnative.dev/)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-=======
-# AI-Chatbot
->>>>>>> 41c5e2ff7bea64740bf343d2e26ae1d04072eb96
+Feel free to contribute or customize for your own AI chatbot experience!
